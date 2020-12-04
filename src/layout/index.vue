@@ -5,14 +5,16 @@
       :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
       @click="isCollapse = !isCollapse"
     />
-    <el-header>
-      <Nav />
-    </el-header>
+    <el-aside :width="isCollapse ? '64px' : '200px'">
+      <AsideNav :is-collapse="isCollapse" />
+    </el-aside>
     <el-container>
-      <el-aside :width="isCollapse ? '64px' : '200px'">
-        <AsideNav :is-collapse="isCollapse" />
-      </el-aside>
-      <el-main>Main</el-main>
+      <el-header :class="isCollapse ? '' : 'hea'">
+        <Nav />
+      </el-header>
+      <el-main>
+        <slot />
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -40,18 +42,25 @@ export default {
 }
 .el-header {
   padding: 0;
+  padding-left: 64px;
   z-index: 1000;
+  box-shadow: 1px 1px 5px #545c64;
 }
-
+.hea.el-header {
+  padding-left: 200px;
+}
 .el-header .el-menu {
   border-bottom: none;
 }
-.el-aside,
+/deep/.el-menu--horizontal > .el-submenu.fr {
+  float: right;
+}
 .el-main {
   padding-top: 60px;
 }
 .el-aside {
   background: #545c64;
+  box-shadow: 1px 1px 5px #545c64;
 }
 .el-aside .el-menu {
   border-right: none;
@@ -59,7 +68,7 @@ export default {
 .el-icon-s-unfold:before,
 .el-icon-s-fold:before {
   position: fixed;
-  top: 75px;
+  top: 15px;
   font-size: 30px;
   z-index: 464564;
 }
